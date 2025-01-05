@@ -1,0 +1,16 @@
+# Ignore auto-generated files
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.cache
+*.log
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Ignore Rider/IDEA project files
+.idea/
