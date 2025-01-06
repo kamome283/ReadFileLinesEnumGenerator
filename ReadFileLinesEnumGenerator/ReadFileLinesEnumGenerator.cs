@@ -25,16 +25,15 @@ public class ReadFileLinesEnumGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        var enumValues =
+        var sourceHolders =
             context
                 .AdditionalTextsProvider
-                .Select((additionalText, token) =>
+                .Where(static file => file.Path.EndsWith(".enum.txt"))
+                .Select((at, token) =>
                 {
-                    var sourcePath = additionalText.Path;
-                    if (!sourcePath.EndsWith(".enum.txt")) return null;
-                    var body = additionalText.GetText(token);
-                    if (body is null) throw new InvalidOperationException($"{sourcePath} is not a valid text file");
-                    var typeName = sourcePath.Split(".").First();
+                    var body = at.GetText(token);
+                    if (body is null) throw new InvalidOperationException($"{at.Path} is not a valid text file");
+                    var typeName = at.Path.Split(".").First();
                     var enumValues =
                         body
                             .Lines
@@ -42,11 +41,6 @@ public class ReadFileLinesEnumGenerator : IIncrementalGenerator
                             .Where(s => !string.IsNullOrWhiteSpace(s));
                     return SourceGenerator.Generate(typeName, enumValues.ToArray());
                 });
-        context.RegisterSourceOutput(enumValues, (spc, source) =>
-        {
-            if (source is null) return;
-            var (hintName, body) = source.Value;
-            spc.AddSource(hintName, body);
-        });
+        context.RegisterSourceOutput(sourceHolders, (spc, holder) => spc.AddSource(holder.hintName, holder.body));
     }
 }
