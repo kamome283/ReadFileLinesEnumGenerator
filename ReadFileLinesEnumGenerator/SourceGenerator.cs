@@ -18,15 +18,20 @@ namespace {Namespace}
 {{ 
     public enum {typeName} 
     {{ 
-        {string.Join(", ", enumValues.Select(GetEnumSegment))} 
-    }} 
+        {string.Join(", ", enumValues.Select(IdentifierRegularizer.Regularize))} 
+    }}
+
+    public static class {typeName}Extensions
+    {{
+        public static string ToStringValue(this {typeName} value)
+        {{
+             {string.Join("\n", enumValues.Select(ev => $"if (value == {IdentifierRegularizer.Regularize(ev)}) return \"{ev}\";"))}
+             throw new ArgumentOutOfRangeException(nameof(value), value, null);
+        }}
+
+   }}
 }}
 ";
-    }
-
-    private string GetEnumSegment(string enumValue)
-    {
-        return $@"[StringValue(""{enumValue}"")] {IdentifierRegularizer.Regularize(enumValue)}";
     }
 
     private string GetHintName(string typeName)
