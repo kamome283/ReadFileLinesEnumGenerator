@@ -7,6 +7,7 @@
 
         <IsRoslynComponent>true</IsRoslynComponent>
         <AnalyzerLanguage>cs</AnalyzerLanguage>
+        <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
     </PropertyGroup>
 
     <ItemGroup>
