@@ -37,8 +37,9 @@ public class ReadFileLinesEnumGenerator : IIncrementalGenerator
                     var enumValues =
                         body
                             .Lines
-                            .Select(l => l.ToString())
-                            .Where(s => !string.IsNullOrWhiteSpace(s));
+                            .Select(l => l.ToString().Trim())
+                            .Where(s => !string.IsNullOrWhiteSpace(s))
+                            .Distinct();
                     return SourceGenerator.Generate(typeName, enumValues.ToArray());
                 });
         context.RegisterSourceOutput(sourceHolders, (spc, holder) => spc.AddSource(holder.hintName, holder.body));
