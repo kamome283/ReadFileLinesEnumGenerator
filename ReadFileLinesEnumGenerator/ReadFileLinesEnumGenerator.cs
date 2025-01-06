@@ -33,7 +33,7 @@ public class ReadFileLinesEnumGenerator : IIncrementalGenerator
                 {
                     var body = at.GetText(token);
                     if (body is null) throw new InvalidOperationException($"{at.Path} is not a valid text file");
-                    var typeName = at.Path.Split(".").First();
+                    var typeName = Path.GetFileName(at.Path).Split(".").First();
                     var enumValues =
                         body
                             .Lines
@@ -42,6 +42,7 @@ public class ReadFileLinesEnumGenerator : IIncrementalGenerator
                             .Distinct();
                     return SourceGenerator.Generate(typeName, enumValues.ToArray());
                 });
-        context.RegisterSourceOutput(sourceHolders, (spc, holder) => spc.AddSource(holder.hintName, holder.body));
+
+        context.RegisterSourceOutput(sourceHolders, (spc, holder) => { spc.AddSource(holder.hintName, holder.body); });
     }
 }
