@@ -15,12 +15,12 @@ Each enum is created using the lines in the provided files, with minimal normali
    
     <!-- Add a reference to the source generator project -->
     <ItemGroup>
-        <ProjectReference Include="..\ReadFileLinesEnumGenerator\ReadFileLinesEnumGenerator.csproj">
+       <PackageReference Include="ReadFileLinesEnumGenerator" Version="1.0.0">
             <!-- Enable this project as an analyzer to run the source generator -->
             <OutputItemType>Analyzer</OutputItemType>
             <!-- Include the analyzer output assembly -->
             <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-        </ProjectReference>
+       </PackageReference>
     </ItemGroup>
 
     <!-- Specify additional files for the generator -->
