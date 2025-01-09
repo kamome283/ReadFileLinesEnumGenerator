@@ -7,9 +7,12 @@ Each enum is created using the lines in the provided files, with minimal normali
 .NET 6 or higher
 
 ## Project Setup
-1. Add a reference to this project by modifying your `.csproj` file accordingly.
-2. Specify file path properties in your `.csproj` file for the generator's usage.
-    - **Note**: File names must have the suffix defined as `.enum.txt` to be compatible with other source generators which also use this property to determine file selection.
+
+1. Add a package reference to this project by running `dotnet add package ReadFileLinesEnumGenerator`.
+2. Update the properties in your `.csproj` file to enable this project as a source generator.
+3. Specify file path properties in your `.csproj` file for the generator to process.
+    - **Note**: File names must have the `.enum.txt` suffix to maintain compatibility with other source generators that
+      use this property for file selection.
 ```xml
 <Project>
    
